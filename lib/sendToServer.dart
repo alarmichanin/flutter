@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 
 void sendToProcessing(PlatformFile file) async {
   var req = http.MultipartRequest("POST", Uri.parse('/'));
+  req.fields['file_name'] = file.name;
   var path = file.path;
 
   if (path == null) return;
