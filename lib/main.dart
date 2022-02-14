@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 
 import './sendToServer.dart';
+import './widgets/popUp.dart';
 
 void main() => runApp(MyApp());
 
@@ -46,7 +47,6 @@ class TabBarDemo extends StatelessWidget {
             centerTitle: true,
           ),
           body: TabBarView(
-
             children: [
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -64,7 +64,7 @@ class TabBarDemo extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Padding(
-                        padding: EdgeInsets.all(screenWidth*0.05),
+                        padding: EdgeInsets.all(screenWidth * 0.05),
                         child: SizedBox(
                           width: screenWidth * 0.7,
                           child: ElevatedButton(
@@ -76,11 +76,38 @@ class TabBarDemo extends StatelessWidget {
                               final res = await FilePicker.platform.pickFiles();
                               if (res == null) return;
                               final pickedFile = res.files.first;
-                              sendToProcessing(pickedFile);
+                              int resReq=await sendFileToProcessing(pickedFile);
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) => buildPopupDialog(context,resReq),
+                                );
                             },
                           ),
                         ),
                       ),
+                      /*
+                      * Future adding of several files
+                      *
+                      Padding(
+                        padding: EdgeInsets.all(screenWidth*0.05),
+                        child: SizedBox(
+                          width: screenWidth * 0.7,
+                          child: ElevatedButton(
+                            child: const Text('PICK FILES'),
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.blue,
+                            ),
+                            onPressed: () async {
+                              FilePickerResult? res = await FilePicker.platform.pickFiles(allowMultiple: true);
+                              if (res == null) return;
+                              final pickedFile = res.files;
+                              print(pickedFile);
+                              // sendFilesToProcessing(files);
+                            },
+                          ),
+                        ),
+                      ),
+                      */
                     ],
                   )
                 ],
