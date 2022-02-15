@@ -21,7 +21,9 @@ Future<int> sendFileToProcessing(PlatformFile file) async {
         return 0;
       }
     });
+    return res.statusCode;
   });
+
   if(code ==200)
     return 1;
   else

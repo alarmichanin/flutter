@@ -16,7 +16,7 @@ Widget buildPopupDialog(BuildContext context, int statusCode) {
           children: [
             Icon(Icons.add_circle_outline,
                 size: screenWidth * 0.3,
-                color: statusCode == 200 ? Colors.green : Colors.red),
+                color: statusCode == 1 ? Colors.green : Colors.red),
           ],
         ),
       ],
