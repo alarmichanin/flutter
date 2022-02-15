@@ -4,7 +4,7 @@ Widget buildPopupDialog(BuildContext context, int statusCode) {
   double screenWidth = MediaQuery.of(context).size.width;
   return AlertDialog(
     title: Center(
-        child: (statusCode == 200)
+        child: (statusCode==1)
             ? const Text('YOUR FILE HAS BEEN SUBMITTED')
             : const Text('YOUR FILE HASN\'T BEEN SUBMITTED')),
     content: Column(

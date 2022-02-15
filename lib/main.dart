@@ -75,7 +75,7 @@ class TabBarDemo extends StatelessWidget {
                             onPressed: () async {
                               final res = await FilePicker.platform.pickFiles();
                               if (res == null) return;
-                              final pickedFile = res.files.first;
+                              final pickedFile = await res.files.first;
                               int resReq=await sendFileToProcessing(pickedFile);
                                 showDialog(
                                   context: context,

@@ -4,14 +4,15 @@ import 'package:file_picker/file_picker.dart';
 import 'package:http/http.dart' as http;
 
 Future<int> sendFileToProcessing(PlatformFile file) async {
+  var path = file.path;
+  if (path == null) return 0;
   var req =
       http.MultipartRequest("POST", Uri.parse('http://10.0.2.2:8000/api/post_data/'));
   req.fields['file_name'] = file.name;
-  var path = file.path;
-  if (path == null) return 0;
+
   req.files.add(await http.MultipartFile.fromPath('file_for_db', path));
 
-  req.send().then((res) {
+  var code = await req.send().then((res) {
     http.Response.fromStream(res).then((onValue) {
       try {
         return res.statusCode;
@@ -21,7 +22,10 @@ Future<int> sendFileToProcessing(PlatformFile file) async {
       }
     });
   });
-  return Future.value(0);
+  if(code ==200)
+    return 1;
+  else
+    return 0;
 }
 
 /*
