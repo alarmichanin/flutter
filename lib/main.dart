@@ -3,6 +3,7 @@ import 'package:file_picker/file_picker.dart';
 
 import './sendToServer.dart';
 import './widgets/popUp.dart';
+import './widgets/listView.dart';
 
 void main() => runApp(MyApp());
 
@@ -77,11 +78,13 @@ class TabBarDemo extends StatelessWidget {
                               final res = await FilePicker.platform.pickFiles();
                               if (res == null) return;
                               final pickedFile = await res.files.first;
-                              int resReq=await sendFileToProcessing(pickedFile);
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) => buildPopupDialog(context,resReq),
-                                );
+                              int resReq =
+                                  await sendFileToProcessing(pickedFile);
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) =>
+                                    buildPopupDialog(context, resReq),
+                              );
                             },
                           ),
                         ),
@@ -113,7 +116,7 @@ class TabBarDemo extends StatelessWidget {
                   )
                 ],
               ),
-              Icon(Icons.directions_transit),
+              projectWidget(),
             ],
           ),
           drawer: Drawer(

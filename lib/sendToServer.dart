@@ -39,35 +39,32 @@ class Album {
   final String name;
   final String slug;
 
-  const Album({
-    required this.id,
-    required this.name,
-    required this.slug,
-  });
+  const Album(this.id, this.name, this.slug);
 
   factory Album.fromJson(Map<String, dynamic> json) {
-    return Album(
-      id: json['id'],
-      name: json['name'],
-      slug: json['slug'],
-    );
+    return Album(json["id"], json["name"], json["slug"]);
   }
 }
 
-Future<Album> fetchAlbum() async {
+Future<List<Album>> fetchAlbum() async {
+
   final response = await http.get(Uri.parse('http://10.0.2.2:8000/api/get_used_files/'));
   try {
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,
       // then parse the JSON.
-      return Album.fromJson(jsonDecode(response.body));
+      List<Album> results=[];
+      for(var elem in jsonDecode(response.body)){
+        results.add(Album.fromJson(elem));
+      }
+      return results;
     } else {
       // If the server did not return a 200 OK response,
       // then throw an exception.
       throw Exception('Failed to load album');
     }
   } catch (e) {
-   return const Album(id: 0, name: "", slug: "");
+   return [];
   }
 }
 
