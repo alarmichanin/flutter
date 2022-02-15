@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 
 Future<int> sendFileToProcessing(PlatformFile file) async {
   var req =
-      http.MultipartRequest("POST", Uri.parse('http://10.0.2.2/post_data/'));
+      http.MultipartRequest("POST", Uri.parse('http://10.0.2.2:8000/api/post_data/'));
   req.fields['file_name'] = file.name;
   var path = file.path;
   if (path == null) return 0;
@@ -49,7 +49,7 @@ class Album {
 }
 
 Future<Album> fetchAlbum() async {
-  final response = await http.get(Uri.parse('http://10.0.2.2/get_used_files/'));
+  final response = await http.get(Uri.parse('http://10.0.2.2:8000/api/get_used_files/'));
   try {
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,
